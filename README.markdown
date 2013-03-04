@@ -43,7 +43,7 @@ There are a handful of other commands in the `binstubs` namespace.
 
 Create a one-off binstub.  For example, with the [Heroku wildcards][] plugin:
 
-    heroku binstubs:create 'myapp-*' --as each-deploy
+    heroku binstubs:create 'myapp-*' --as each-env
 
 [heroku wildcards]: https://github.com/tpope/heroku-wildcards
 
