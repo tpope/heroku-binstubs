@@ -21,7 +21,7 @@ easy to create them.
 
 ## Usage
 
-    heroku binstubs myapp
+    heroku binstubs:create myapp
 
 For each app named like `myapp-*`, create a binstub named `*`.  For example,
 `myapp-staging` becomes `staging`.  If there is an app named `myapp`, it
@@ -30,9 +30,9 @@ will be created as `production`.
 By default, binstubs are created in `./bin`, which works nicely with
 `PATH=./bin:...`.  You can override the destination with `--directory`.
 
-    heroku binstubs myapp --directory script/heroku
+    heroku binstubs:create myapp --directory script/heroku
 
-With no arguments, `heroku binstubs` uses the current directory name,
+With no arguments, `heroku binstubs:create` uses the current directory name,
 stripping off anything after a period (`example.com` becomes `example`).
 
 If you'd rather have binstubs that match the exact app name, pass in `--full`.
@@ -46,6 +46,12 @@ Create a one-off binstub.  For example, with the [Heroku wildcards][] plugin:
     heroku binstubs:create 'myapp-*' --as each-env
 
 [heroku wildcards]: https://github.com/tpope/heroku-wildcards
+
+### heroku binstubs:setup
+
+Invoke `heroku binstubs:create`, and then create a Git remote for each binstub
+with the same name, if it doesn't already exist.  For a freshly cloned
+repository, this is your go-to setup tool.
 
 ### heroku binstubs:list
 

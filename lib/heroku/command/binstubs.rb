@@ -27,7 +27,7 @@ class Heroku::Command::Binstubs < Heroku::Command::Base
     if options[:as]
       app_name = shift_argument || app
       validate_arguments!
-      write_binstub(app_name, options[:as])
+      [write_binstub(app_name, options[:as])]
     elsif args.any?
       basename = shift_argument
       validate_arguments!
@@ -37,6 +37,21 @@ class Heroku::Command::Binstubs < Heroku::Command::Base
     else
       basename = File.basename(Dir.pwd).tr('_', '-').split('.').first
       write_binstubs_for_basename(basename, basename.gsub(/-/, ''))
+    end
+  end
+
+  # binstubs:setup ...
+  #
+  # create binstubs and set up remotes
+  #
+  # This calls binstub:create and then sets up Git remotes for each app.
+  #
+  # -d, --directory DIR # use directory DIR (default: ./bin)
+  # -f, --full          # use full app name as binstub name
+  # --as STUB           # create a single one-off binstub named STUB
+  def setup
+    create.each do |(app, name)|
+      create_git_remote(name, "git@heroku.com:#{app}.git")
     end
   end
 
@@ -146,6 +161,7 @@ HEROKU_APP=#{app} exec heroku "$@"
       end
       display_binstub(path, app)
     end
+    [app, short_name]
   rescue SystemCallError => e
     error e.message
   end
@@ -157,9 +173,10 @@ HEROKU_APP=#{app} exec heroku "$@"
     if basename.nil?
       error("Couldn't find any apps named #{candidates.first} or #{candidates.first}-*.")
     end
-    app_names.grep(/^#{basename}(-|$)/).each do |app|
-      truncated = app[basename.length+1..-1] || 'production'
-      write_binstub(app, options[:full] ? app : truncated)
+    app_names.grep(/^#{basename}(-|$)/).map do |app|
+      name = options[:full] ? app : app[basename.length+1..-1] || 'production'
+      write_binstub(app, name)
+      [app, name]
     end
   end
 
