@@ -144,8 +144,8 @@ class Heroku::Command::Binstubs < Heroku::Command::Base
 HEROKU_APP=#{app} exec heroku "$@"
         SH
       end
+      display_binstub(path, app)
     end
-    display_binstub(path, app)
   rescue SystemCallError => e
     error e.message
   end
