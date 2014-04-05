@@ -2,7 +2,7 @@
 
 Stop typing out `heroku run console --app myapp-staging` and start using
 Heroku [binstubs][]: wrappers around the `heroku` command that configure it
-for a given app.  Here's an example:
+for a given app.  Here's a simplified example:
 
 ```sh
 #!/bin/sh

@@ -121,7 +121,7 @@ class Heroku::Command::Binstubs < Heroku::Command::Base
   private
 
   def app_for_binstub(path)
-    if File.file?(path) && File.readable?(path) && File.read(path, 512) =~ /\A#!.*\n+HEROKU_APP=['"]?(.*?)['"]? (?:exec )?heroku.*\n*\z/
+    if File.file?(path) && File.readable?(path) && File.read(path, 512) =~ /\A#!.*\n+HEROKU_APP=['"]?(.*?)['"]? .*?heroku.*\n*\z/
       $1
     end
   end
@@ -156,7 +156,7 @@ class Heroku::Command::Binstubs < Heroku::Command::Base
       File.open(path, 'w', 0777) do |f|
         f.write(<<-SH)
 #!/bin/sh
-HEROKU_APP=#{app} exec heroku "$@"
+HEROKU_APP=#{app} HKAPP=#{app} exec "${HEROKU_COMMAND:-heroku}" "$@"
         SH
       end
       display_binstub(path, app)
