@@ -10,8 +10,8 @@ HEROKU_APP=myapp-staging exec heroku "$@"
 ```
 
 Binstubs let you do do `staging logs`, `staging info`, and any other Heroku
-command without the `--app` or `--remote` insanity, and this plugin makes it
-easy to create them.
+command without the `--app` or `--remote` ridiculousness, and this plugin
+makes it easy to create them.
 
 [binstubs]: https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs
 
