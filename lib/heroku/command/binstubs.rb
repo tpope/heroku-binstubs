@@ -156,7 +156,7 @@ class Heroku::Command::Binstubs < Heroku::Command::Base
       File.open(path, 'w', 0777) do |f|
         f.write(<<-SH)
 #!/bin/sh
-HEROKU_APP=#{app} HKAPP=#{app} exec "${HEROKU_COMMAND:-heroku}" "$@"
+HEROKU_APP=#{app} exec "${HEROKU_COMMAND:-heroku}" "$@"
         SH
       end
       display_binstub(path, app)
