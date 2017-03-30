@@ -181,7 +181,7 @@ HEROKU_APP=#{app} HKAPP=#{app} exec "${HEROKU_COMMAND:-heroku}" "$@"
   end
 
   def app_names
-    @app_names ||= api.get_apps.body.map {|a| a['name']}.sort
+    @app_names ||= %x{heroku apps -A}.scan(/^\w[\w-]*/)
   end
 
   def all_git_remotes
